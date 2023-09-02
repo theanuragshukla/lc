@@ -1,17 +1,30 @@
-const express = require('express')
-const app = express()
-const port = 8000
-const http = require('http').Server(app)
+require("dotenv").config();
+const express = require("express");
+const app = express();
+const http = require("http").Server(app);
 
+const db = require("./utils/database.js");
+const userRouter = require("./routes/users");
 
-app.get("/", (_, res)=>{
-    res.json({
-        status:true, msg:"Alive!"
+const port = process.env.PORT || 8000;
+
+app.use(express.json());
+app.use(
+    express.urlencoded({
+        extended: true,
     })
-    return
-})
+);
 
+app.get("/", (_, res) => {
+    res.json({
+        status: true,
+        msg: "Alive!",
+    });
+    return;
+});
 
-const server = http.listen(port, ()=>{
-    console.log(`running on port ${port}`)
-})
+app.use("/users", userRouter);
+
+const server = http.listen(port, () => {
+    console.log(`running on port ${port}`);
+});
