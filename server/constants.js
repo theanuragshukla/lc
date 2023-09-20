@@ -1,3 +1,4 @@
 module.exports = {
-    ITEM_LIMIT: [25, 50, 100]
+    ITEM_LIMIT: [25, 50, 100],
+    excludedRoutes:['/']
 }

@@ -1,7 +1,7 @@
 const buildQuery = async ({ text, school, countryCode }) => {
     const arr = [];
 
-    if (text) {
+    if (validate(text)) {
         const obj = {
             $or: [
                 {
@@ -21,7 +21,7 @@ const buildQuery = async ({ text, school, countryCode }) => {
         arr.push(obj);
     }
 
-    if (school) {
+    if (validate(school)) {
         const obj = {
             school: {
                 $regex: school,
@@ -31,7 +31,7 @@ const buildQuery = async ({ text, school, countryCode }) => {
         arr.push(obj);
     }
 
-    if (countryCode) {
+    if (validate(countryCode)) {
         const obj = {
             countryCode: {
                 $regex: countryCode,
@@ -40,11 +40,16 @@ const buildQuery = async ({ text, school, countryCode }) => {
         };
         arr.push(obj);
     }
+<<<<<<< HEAD
     
     if(arr.length == 0){
         return {};       
     }
     
+=======
+    if(arr.length===0)return {}
+
+>>>>>>> origin/apiSetup
     const query = {
         $and: [...arr],
     };
@@ -52,5 +57,6 @@ const buildQuery = async ({ text, school, countryCode }) => {
 };
 
 const validate = (str = "") => str.trim().length !== 0;
+
 
 module.exports = { buildQuery, validate };

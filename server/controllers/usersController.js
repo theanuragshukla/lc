@@ -47,6 +47,13 @@ const searchUsers = async (req, res) => {
     };
 
     const query = await buildQuery(queryValue);
+    if(Object.keys(query).length===0){
+        res.json({
+            status:false,
+            msg:"Invalid Query"
+        })
+        return
+    }
     const data = await users
         .find(query)
         .skip((page - 1) * limit)
@@ -62,12 +69,23 @@ const searchUsers = async (req, res) => {
     }
     res.json({
         status: false,
-        data: [],
         msg: "failure",
     });
 };
 
+const regSearchUsers =  async (req, res) => {
+try {
+    const {q} = req.query
+    var regex = new RegExp(q, 'i');
+    const data = await users.find({username:regex}, 'username -_id').limit(20);
+    res.status(200).json({status:true, msg:"Success", data:data.map(o=>o.username)});
+} catch (error) {
+    res.status(500).json({status:false, msg:error.message});
+}
+}
+
 module.exports = {
     fetchUsers,
     searchUsers,
+    regSearchUsers
 };
