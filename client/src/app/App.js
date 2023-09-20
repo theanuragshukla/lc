@@ -1,16 +1,18 @@
 import React from "react";
 import { BrowserRouter, Routes, Route} from "react-router-dom";
 import Box from '@mui/material/Box';
-import Ratings from "./pages/ratings";
-import { color } from "@mui/system";
-
+import Header from "./pages/header";
+import GlobalRanking from "./pages/globalRanking";
+import Standing from "./pages/standing";
 
 function App() {
   return (
-    <Box className="App"> 
+    <Box className="App">
+      <Header /> 
       <BrowserRouter>
         <Routes>
-          <Route path = "/ratings" element = {<Ratings />}/>
+          <Route path = "/global-ranking" element = {<GlobalRanking />}/>
+          <Route path = "/standing" element = {<Standing />}/>
         </Routes>
       </BrowserRouter>
     </Box>

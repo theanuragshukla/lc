@@ -40,7 +40,11 @@ const buildQuery = async ({ text, school, countryCode }) => {
         };
         arr.push(obj);
     }
-
+    
+    if(arr.length == 0){
+        return {};       
+    }
+    
     const query = {
         $and: [...arr],
     };
