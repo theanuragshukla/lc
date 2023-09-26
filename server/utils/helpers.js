@@ -40,16 +40,8 @@ const buildQuery = async ({ text, school, countryCode }) => {
         };
         arr.push(obj);
     }
-<<<<<<< HEAD
-    
-    if(arr.length == 0){
-        return {};       
-    }
-    
-=======
     if(arr.length===0)return {}
 
->>>>>>> origin/apiSetup
     const query = {
         $and: [...arr],
     };

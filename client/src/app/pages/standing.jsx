@@ -19,6 +19,7 @@ const processUsers = (users) => {
 function Standing() {
   const [page, setPage] = useState(1);
   const [users, setUsers] = useState([]);
+  const [friends, setFriends] = useState([]);
   const [totalPages, setTotalPages] = useState(1000);
   const [isCommonStanding, setIsCommnonStanding] = useState(true);
   const [isFriendsStanding, setIsFriendsStanding] = useState(false);
@@ -32,6 +33,9 @@ function Standing() {
       const response = await fetch(`${BASE_URL}/standing/page/${page}`);
       const { data } = await response.json();
       setUsers(processUsers(data.users));
+
+      setIsCommnonStanding(true);
+      setIsFriendsStanding(false);
     } catch (err) {
       console.log(err);
     }
@@ -39,15 +43,31 @@ function Standing() {
 
   const getFriendsStanding = async () => {
     try {
-      const response = await fetch(`${BASE_URL}/standing/page/${page}`);
-      const data = await response.json();
-      setUsers(data.data);
+      const response = await fetch(`${BASE_URL}/standing/friends`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json', 
+        },
+        body: JSON.stringify({
+          friends,
+        })
+      });
+
+      const { data } = await response.json();
+      setUsers(processUsers(data.friends));
+      
+      setIsCommnonStanding(false);
+      setIsFriendsStanding(true);
     } catch (err) {
       console.log(err);
     }
   };
 
   useEffect(() => {
+    if(localStorage.getItem("friends")){
+      setFriends(localStorage.getItem("friends").split(","));
+    }  
+
     getStanding();
   }, [page]);
 
@@ -63,8 +83,7 @@ function Standing() {
         <Button
           variant="contained"
           onClick={() => {
-            setIsCommnonStanding(true);
-            setIsFriendsStanding(false);
+            getStanding();
           }}
         >
           COMMON STANDINGS
@@ -72,8 +91,7 @@ function Standing() {
         <Button
           variant="contained"
           onClick={() => {
-            setIsCommnonStanding(false);
-            setIsFriendsStanding(true);
+            getFriendsStanding();
           }}
         >
           FRIENDS STANDINGS

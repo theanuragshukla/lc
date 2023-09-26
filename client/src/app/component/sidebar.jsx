@@ -70,9 +70,13 @@ const Sidebar = forwardRef(({ items }, ref) => {
         <Stack alignItems={"center"} gap={2}>
           <Avatar src="#"/>
           <Box>0abhay0</Box>
-          <Stack direction={"row"} >
-            <Button>Signup</Button>
-            <Button>Login</Button>
+          <Stack direction={"row"} gap={2}>
+            <Link href="/signup" variant="body2" textAlign={"center"}>
+                Signup
+            </Link>
+            <Link href="/login" variant="body2" textAlign={"center"}>
+                Login
+            </Link>
           </Stack>
         </Stack>
 

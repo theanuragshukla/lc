@@ -61,8 +61,10 @@ function Rating() {
 
     try {
       const response = await fetch(`${BASE_URL}/users/search?${query}`);
-      const data = await response.json();
-      setUsers(data.data);
+
+      const { data } = await response.json();
+      setUsers(data);
+      console.log(data);
     } catch (err) {
       console.log(err);
     }

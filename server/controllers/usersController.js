@@ -47,13 +47,14 @@ const searchUsers = async (req, res) => {
     };
 
     const query = await buildQuery(queryValue);
-    if(Object.keys(query).length===0){
-        res.json({
-            status:false,
-            msg:"Invalid Query"
-        })
-        return
-    }
+    // if(Object.keys(query).length===0){
+    //     res.json({
+    //         status:false,
+    //         msg:"Invalid Query"
+    //     })
+    //     return
+    // }
+
     const data = await users
         .find(query)
         .skip((page - 1) * limit)

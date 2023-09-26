@@ -3,6 +3,8 @@ const redis = require("../utils/redisDB.js");
 
 const LEADERBOARD = 'leaderboard';
 
+// TODO : Add Namespaces while inserting data in redis
+
 const getMyRank = async (req, res) => {
     // const { username } = req.user;
     const username = 'tusharshivansh502';
@@ -121,8 +123,7 @@ const getStanding = async (req, res) => {
 };
 
 const getFriendsStanding = async (req, res) => {
-    // const { friends } = req.user;
-    const friends = ['abhay', 'manish'];
+    const { friends } = req.body;
 
     try{
         const allFriendsDetails = []; 
