@@ -6,6 +6,6 @@ const router = Router()
 
 router.post('/login', loginPost)
 router.post('/signup', signupPost)
-router.post('/verify',checkAuth);
+router.get('/verify',checkAuth);
 
 module.exports = router

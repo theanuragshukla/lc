@@ -2,7 +2,7 @@ const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 
 const auth = require('../models/auth');
-const { excludedRoutes } = require('../constants');
+const { excludedRoutes, ACCESS_TOKEN } = require('../constants');
 const secret = process.env.JWT_SECRET;
 
 
@@ -30,7 +30,7 @@ const resolveToken = async (req, res, next) => {
     if (excludedRoutes.includes(url)) {
         next();
     } else {
-        const token = rq.header("x-access-token")
+        const token = req.header(ACCESS_TOKEN)
         const authData = await verifyToken(token);
         if (!authData.status) {
                 res.status(401).json({
@@ -38,7 +38,7 @@ const resolveToken = async (req, res, next) => {
                     msg: 'unauthorised access',
                 });
         } else {
-            req.usrProf = authData.data;
+            req.user = authData.data;
             next();
         }
     }

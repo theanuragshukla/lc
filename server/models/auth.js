@@ -24,6 +24,9 @@ const authSchema = new Schema({
         required: "Username is required"
     },
     password: String,
+    friends:{
+        type:[String]
+    }
 }
 )
 

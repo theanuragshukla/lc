@@ -3,7 +3,8 @@ const jwt = require('jsonwebtoken')
 
 const auth = require("../models/auth");
 const { generateUid, verifyToken } = require("../utils/authHelpers");
-const { checkEmail, checkPass, checkName, checklen } = require("../utils/validator");
+const { checkEmail, checkPass,  checklen } = require("../utils/validator");
+const { ACCESS_TOKEN } = require('../constants');
 const secret = process.env.JWT_SECRET
 const saltRounds = 10
 
@@ -30,7 +31,6 @@ const loginPost = async (req, res) => {
 const signupPost = async (req, res) => {
     try {
         let { email = "", password = "", username = "" } = req.body;
-        console.log(req.body)
         if (!checkEmail(email)) {
             res.status(400).json({ status: false, msg: 'Enter a valid email address' });
             return;
@@ -68,16 +68,15 @@ const signupPost = async (req, res) => {
             res.json({ status: false, msg: errMsg })
         })
     } catch (err) {
-        console.log(err)
         res.status(500).json({ msg: err.message, status: false });
     }
 };
 const checkAuth = async (req, res) => {
-    const token = req.headers['x-access-token'];
+    const token = req.headers[ACCESS_TOKEN];
     const { status, data} = await verifyToken(token);
     res.status(200).json({
         status,
-        data: status ? { username:data.username, email:data.email } : null,
+        data: status ? { username:data.username, email:data.email, friends:data.friends } : null,
     });
 };
 

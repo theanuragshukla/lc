@@ -7,6 +7,8 @@ const http = require("http").Server(app);
 const db = require("./utils/database.js");
 const userRouter = require("./routes/users");
 const authRouter = require("./routes/auth");
+const accountRouter = require("./routes/accounts/");
+const { resolveToken } = require("./utils/authHelpers.js");
 
 const port = process.env.PORT || 8000;
 
@@ -31,6 +33,10 @@ app.get("/", (_, res) => {
 
 app.use("/users", userRouter);
 app.use('/auth', authRouter)
+app.use(resolveToken)
+app.use('/account',accountRouter )
+
+
 
 const server = http.listen(port, () => {
     console.log(`running on port ${port}`);
