@@ -7,6 +7,7 @@ const http = require("http").Server(app);
 const db = require("./utils/database.js");
 const userRouter = require("./routes/users");
 const authRouter = require("./routes/auth");
+const standingRouter = require("./routes/standings");
 const accountRouter = require("./routes/accounts/");
 const { resolveToken } = require("./utils/authHelpers.js");
 
@@ -34,6 +35,7 @@ app.get("/", (_, res) => {
 app.use("/users", userRouter);
 app.use('/auth', authRouter)
 app.use(resolveToken)
+app.use("/standing", standingRouter);
 app.use('/account',accountRouter )
 
 
